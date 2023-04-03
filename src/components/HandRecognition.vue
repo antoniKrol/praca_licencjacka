@@ -22,7 +22,7 @@ export default {
     mounted() {
         const width = 700;
         const height = 400;
-        //s
+        let isCameraLooking = false;
         const addShape = (camera) => {
             const scale = 100; // Increase the scale if needed
             const points = pointsArray.map(
@@ -62,19 +62,18 @@ export default {
             });
 
             mesh = new THREE.Mesh(geometry, material);
-            // Calculate the center of the input points
-            const center = new THREE.Vector3(0, 0, 0);
-            pointsArray.forEach((point) => center.add(point));
-            center.divideScalar(pointsArray.length);
+            if (!isCameraLooking) {
+                // Calculate the center of the input points
+                const center = new THREE.Vector3(0, 0, 0);
+                pointsArray.forEach((point) => center.add(point));
+                center.divideScalar(pointsArray.length);
 
-            // Update camera position and target
-            camera.position.set(center.x, center.y, center.z + 100);
-            camera.lookAt(center);
-
+                // Update camera position and target
+                camera.position.set(center.x, center.y, center.z + 100);
+                camera.lookAt(center);
+                isCameraLooking = true;
+            }
             scene.add(mesh);
-
-            // Debug: Print the convex hull points
-            console.log("Convex hull points:", convexHull);
         };
 
         let shapeAdded = false;
@@ -164,8 +163,8 @@ export default {
         hands.setOptions({
             maxNumHands: 1,
             modelComplexity: 1,
-            minDetectionConfidence: 0.5,
-            minTrackingConfidence: 0.5,
+            minDetectionConfidence: 0.7,
+            minTrackingConfidence: 0.7,
         });
 
         hands.onResults(onResults);
@@ -187,19 +186,7 @@ export default {
         canvas.height = height;
         // Utwórz scenę
         scene = new THREE.Scene();
-        // Add an ambient light
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
 
-        // Add a directional light
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(directionalLight);
-
-        // Add a point light
-        const pointLight = new THREE.PointLight(0xffffff, 1, 100);
-        pointLight.position.set(0, 0, 5);
-        scene.add(pointLight);
         // Utwórz kamerę
         cameraT = new THREE.PerspectiveCamera(
             775,
