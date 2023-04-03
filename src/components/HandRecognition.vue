@@ -33,10 +33,6 @@ export default {
                         Math.abs(point.z * scale * 10)
                     )
             );
-
-            // Debug: Print the input points array
-            //console.log("Input points:", points);
-
             const convexHull = new ConvexHull().setFromPoints(points);
 
             // Create geometry from the convex hull
