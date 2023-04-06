@@ -1,16 +1,22 @@
 <template>
   <div id="app" v-bind:style="{ backgroundColor: backgroundColor }">
-    <!-- Your other components here -->
-    <HandRecognition />
+    <VThemeProvider>
+      <router-view></router-view>
+    </VThemeProvider>
+
   </div>
 </template>
 
 <script>
-import HandRecognition from './components/HandRecognition.vue';
+
 
 export default {
+
+  theme: {
+    defaultTheme: 'dark'
+  },
   components: {
-    HandRecognition,
+
   },
   data() {
     return {

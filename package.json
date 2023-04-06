@@ -14,7 +14,9 @@
     "three": "^0.151.3",
     "three-stdlib": "^2.21.8",
     "vue": "^3.2.13",
-    "vue-threejs": "^0.2.0-alpha.1"
+    "vue-router": "4",
+    "vue-threejs": "^0.2.0-alpha.1",
+    "vuetify": "^3.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
