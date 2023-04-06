@@ -1,9 +1,10 @@
 <template>
   <div id="app" v-bind:style="{ backgroundColor: backgroundColor }">
-    <VThemeProvider>
-      <router-view></router-view>
-    </VThemeProvider>
-
+    <VApp>
+      <VThemeProvider>
+        <router-view></router-view>
+      </VThemeProvider>
+    </VApp>
   </div>
 </template>
 

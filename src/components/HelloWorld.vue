@@ -1,10 +1,12 @@
 <template>
-  <vContainer class="text-center">
-    <h1>Welcome</h1>
-    <p>Please choose an option:</p>
-    <VBtn color="primary" to="/hand">Create 3D Shapes</VBtn>
-    <VBtn color="secondary" @click="notImplemented" class="mx-2">Use Whiteboard</VBtn>
-  </vContainer>
+  <VMain>
+    <VContainer class="text-center">
+      <h1>Welcome</h1>
+      <p>Please choose an option:</p>
+      <VBtn color="primary" to="/hand">Create 3D Shapes</VBtn>
+      <VBtn color="secondary" @click="notImplemented" class="mx-2">Use Whiteboard</VBtn>
+    </VContainer>
+  </VMain>
 </template>
 
 <script>
