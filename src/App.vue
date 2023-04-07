@@ -1,22 +1,22 @@
 <template>
   <VApp>
-    <VThemeProvider>
-      <router-view></router-view>
-    </VThemeProvider>
+    <VerticalNavBar />
+    <VMain>
+      <VThemeProvider>
+        <RouterView />
+      </VThemeProvider>
+    </VMain>
   </VApp>
 </template>
 
 <script>
-
-
+import VerticalNavBar from "./navigation/VerticalNavBar.vue";
 export default {
   components: {
-
+    VerticalNavBar,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
 };
 </script>

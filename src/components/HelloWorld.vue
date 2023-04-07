@@ -3,20 +3,57 @@
     <VContainer class="text-center">
       <h1>Wybierz:</h1>
       <VSpacer></VSpacer>
-      <VBtn color="primary" to="/hand">Tworzenie brył 3D</VBtn>
-      <VBtn color="secondary" @click="notImplemented" class="mx-2">Pisanie po "szkle"</VBtn>
+
+      <VRow class="mt-4">
+        <VCard class="mx-auto" max-width="344" variant="outlined">
+          <VCardItem>
+            <div>
+              <div class="text-overline mb-1">Użytkowniku</div>
+              <div class="text-h6 mb-1">Tworzenie brył 3D</div>
+              <div class="text-caption">
+                Twórz bryły przy użyciu kamery oraz dłoni
+              </div>
+            </div>
+          </VCardItem>
+          <VCardActions>
+            <VBtn variant="outlined" color="on-surface" to="/hand"
+              >Tworzenie brył 3D</VBtn
+            >
+          </VCardActions>
+        </VCard>
+        <VCard class="mx-auto" max-width="344" variant="outlined">
+          <VCardItem>
+            <div>
+              <div class="text-overline mb-1">Użytkowniku</div>
+              <div class="text-h6 mb-1">Pisanie po szkle</div>
+              <div class="text-caption">
+                Pisz w powietrzu tak jak na tablicy
+              </div>
+            </div>
+          </VCardItem>
+          <VCardActions>
+            <VBtn
+              variant="outlined"
+              color="on-surface"
+              @click="notImplemented"
+              class="mx-2"
+              >Pisanie po "szkle"</VBtn
+            >
+          </VCardActions>
+        </VCard>
+      </VRow>
     </VContainer>
   </VMain>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
   methods: {
     notImplemented() {
-      alert('This feature is not implemented yet.')
+      alert("This feature is not implemented yet.");
     },
   },
-})
+});
 </script>
