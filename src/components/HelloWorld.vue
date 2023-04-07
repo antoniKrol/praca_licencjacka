@@ -1,10 +1,10 @@
 <template>
   <VMain>
     <VContainer class="text-center">
-      <h1>Welcome</h1>
-      <p>Please choose an option:</p>
-      <VBtn color="primary" to="/hand">Create 3D Shapes</VBtn>
-      <VBtn color="secondary" @click="notImplemented" class="mx-2">Use Whiteboard</VBtn>
+      <h1>Wybierz:</h1>
+      <VSpacer></VSpacer>
+      <VBtn color="primary" to="/hand">Tworzenie brył 3D</VBtn>
+      <VBtn color="secondary" @click="notImplemented" class="mx-2">Pisanie po "szkle"</VBtn>
     </VContainer>
   </VMain>
 </template>
@@ -17,9 +17,6 @@ export default defineComponent({
     notImplemented() {
       alert('This feature is not implemented yet.')
     },
-  },
-  mounted() {
-    document.body.style.backgroundColor = '#f5f5f5'; // Change this to your desired color
   },
 })
 </script>

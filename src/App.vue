@@ -1,21 +1,15 @@
 <template>
-  <div id="app" v-bind:style="{ backgroundColor: backgroundColor }">
-    <VApp>
-      <VThemeProvider>
-        <router-view></router-view>
-      </VThemeProvider>
-    </VApp>
-  </div>
+  <VApp>
+    <VThemeProvider>
+      <router-view></router-view>
+    </VThemeProvider>
+  </VApp>
 </template>
 
 <script>
 
 
 export default {
-
-  theme: {
-    defaultTheme: 'dark'
-  },
   components: {
 
   },
