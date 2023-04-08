@@ -31,6 +31,11 @@ export default {
           icon: "mdi-human-male-board",
           link: "/white-board",
         },
+        {
+          title: "Kształty 2D",
+          icon: "mdi-triangle",
+          link: "/2d-shapes",
+        },
       ],
     };
   },
