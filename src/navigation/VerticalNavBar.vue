@@ -1,22 +1,10 @@
 <template>
-  <VNavigationDrawer
-    app
-    :mini-variant="mini"
-    :width="drawerWidth"
-    :value="drawer"
-    permanent>
-    <VBtn
-      variant="text"
-      color="on-surface"
-      @click="toggleDrawer"
-      :icon="toggleIcon" />
+  <VNavigationDrawer app :mini-variant="mini" :width="drawerWidth" :value="drawer" permanent>
+    <VBtn variant="text" color="primary" @click="toggleDrawer" :icon="toggleIcon" />
 
     <VDivider></VDivider>
     <VList dense>
-      <VListItem
-        v-for="(item, index) in menuItems"
-        :key="index"
-        :to="item.link">
+      <VListItem v-for="(item, index) in menuItems" :key="index" :to="item.link">
         <VListItemIcon>
           <VIcon>{{ item.icon }}</VIcon>
         </VListItemIcon>
@@ -41,7 +29,7 @@ export default {
         {
           title: "Whiteboard",
           icon: "mdi-human-male-board",
-          link: "/settings",
+          link: "/white-board",
         },
       ],
     };

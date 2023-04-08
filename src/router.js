@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HelloWorld from './components/HelloWorld.vue';
 import NotFound from './components/NotFound.vue'
 import HandRecognition from './components/HandRecognition.vue';
+import WhiteBoard from '@/components/WhiteBoard.vue'
 
 const routes = [
     {
@@ -13,6 +14,11 @@ const routes = [
         path: '/hand',
         name: 'Hand',
         component: HandRecognition
+    },
+    {
+        path: '/white-board',
+        name: 'whiteBoard',
+        component: WhiteBoard
     },
     {
         path: '/:pathMatch(.*)*',

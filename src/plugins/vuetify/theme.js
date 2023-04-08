@@ -4,8 +4,8 @@ const theme = {
         light: {
             dark: false,
             colors: {
-                'primary': '#9155FD',
-                'secondary': '#8A8D93',
+                'primary': '#934A5F',
+                'secondary': '#C2B4D6',
                 'on-secondary': '#fff',
                 'success': '#56CA00',
                 'info': '#16B1FF',
@@ -40,8 +40,8 @@ const theme = {
         dark: {
             dark: true,
             colors: {
-                'primary': '#364666',
-                'secondary': '#5D75A6',
+                'primary': '#D3AC2B',
+                'secondary': '#CBD0D8',
                 'on-secondary': '#fff',
                 'success': '#56CA00',
                 'info': '#16B1FF',
@@ -50,10 +50,10 @@ const theme = {
                 'on-primary': '#FFFFFF',
                 'on-success': '#FFFFFF',
                 'on-warning': '#FFFFFF',
-                'background': '#405173',
-                'on-background': '#E7E3FC',
+                'background': '#333D51',
+                'on-background': '#F4F3EA',
                 'surface': '#312D4B',
-                'on-surface': '#E7E3FC',
+                'on-surface': '#F4F3EA',
                 'grey-50': '#2A2E42',
                 'grey-100': '#2F3349',
                 'grey-200': '#4A5072',

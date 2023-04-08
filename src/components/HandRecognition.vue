@@ -1,21 +1,23 @@
 <template>
-  <VRow class="mx-2 mt-4">
-    <VCard class="me-1" color="primary">
-      <div ref="rendererContainer" />
-    </VCard>
-    <VCard color="primary">
-      <div class="content-container">
-        <video class="input_video" ref="videoElement" playsinline></video>
-        <canvas id="drawing" ref="canvas"></canvas>
-      </div>
-    </VCard>
-  </VRow>
+  <VCol>
+    <VRow class="mx-2 mt-4">
+      <VCard class="me-1 pa-1" color="primary">
+        <div ref="rendererContainer" />
+      </VCard>
+      <VCard color="primary" class="pa-1">
+        <div class="content-container">
+          <video class="input_video" ref="videoElement" playsinline></video>
+          <canvas id="drawing" ref="canvas"></canvas>
+        </div>
+      </VCard>
+    </VRow>
 
-  <VContainer fluid class="d-flex justify-center align-center">
-    <VIcon class="mt-5" size="36" :icon="currentIcon" :color="currentColor" />
-    <br />
-    <p id="coord" ref="coordElement"></p>
-  </VContainer>
+    <VContainer fluid class="d-flex justify-center align-center">
+      <VIcon class="mt-5" size="36" :icon="currentIcon" :color="currentColor" />
+      <br />
+      <p id="coord" ref="coordElement"></p>
+    </VContainer>
+  </VCol>
 </template>
 
 <script>
@@ -25,7 +27,10 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Camera } from "@mediapipe/camera_utils";
 import { Hands } from "@mediapipe/hands";
 import { ConvexHull } from "three-stdlib";
-
+import {
+  arePointsTouching,
+  mergeClosePoints,
+} from "@/utils/utils";
 export default {
   name: "HandRecognition",
   data() {
@@ -91,38 +96,15 @@ export default {
     // Pobierz element <video> o klasie "input_video"
     const videoElement = this.$refs.videoElement;
 
-    // Pobierz element <canvas> o klasie "output_canvas"
-    //const canvasElement = document.getElementsByClassName("output_canvas")[0];
-
-    //Klasa przechowujaca wierzchloki bryły stworzonej przez uzytkownika
-
-    // Funkcja sprawdzająca, czy odległość między punktami p1 i p2 jest na tyle mała, że można ją interpretować jako stykanie palców
-    function arePointsTouching(p1, p2) {
-      // Jeśli odległość między punktami jest mniejsza niż 0.05, zwróć true, w przeciwnym razie zwróć false
-      if (getDistance(p1, p2) < 0.05) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    // Funkcja zwracająca odległość między punktami p1 i p2 w przestrzeni 3D
-    function getDistance(p1, p2) {
-      // Oblicz odległość między punktami za pomocą wzoru na odległość w przestrzeni 3D
-      const distance = Math.sqrt(
-        Math.pow(p2.x - p1.x, 2) +
-          Math.pow(p2.y - p1.y, 2) +
-          Math.pow(p2.z - p1.z, 2)
-      );
-      return distance;
-    }
-
     // Tablica do przechowywania punktów
     let pointsArray = [];
 
     // Zmienna do przechowywania aktualnego indeksu w tablicy temp
     //let i = -1;
     let isPointAdded = false;
+
+
+
     //Funkcja wywoływana przy każdym nowym wyniku rozpoznawania dłoni
     //d = ((x2 - x1)2 + (y2 - y1)2 + (z2 - z1)2)1/2
     const onResults = (results) => {
@@ -144,7 +126,7 @@ export default {
           //shapeAdded=true;
         }
         if (!isPointAdded && arePointsTouching(p1, p2)) {
-          pointsArray.push(p1);
+          pointsArray = mergeClosePoints(pointsArray, p1, 0.02);
           isPointAdded = true;
         } else if (!arePointsTouching(p1, p2)) {
           this.$refs.coordElement.innerHTML = pointsArray.length;
