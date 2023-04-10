@@ -16,9 +16,7 @@
             </div>
           </VCardItem>
           <VCardActions>
-            <VBtn variant="outlined" color="on-surface" to="/hand"
-              >Tworzenie brył 3D</VBtn
-            >
+            <VBtn variant="outlined" color="on-surface" to="/hand">Tworzenie brył 3D</VBtn>
           </VCardActions>
         </VCard>
         <VCard class="mx-auto" max-width="344" variant="outlined">
@@ -32,13 +30,21 @@
             </div>
           </VCardItem>
           <VCardActions>
-            <VBtn
-              variant="outlined"
-              color="on-surface"
-              @click="notImplemented"
-              class="mx-2"
-              >Pisanie po "szkle"</VBtn
-            >
+            <VBtn variant="outlined" color="on-surface" @click="notImplemented" class="mx-2">Pisanie po "szkle"</VBtn>
+          </VCardActions>
+        </VCard>
+        <VCard class="mx-auto" max-width="344" variant="outlined">
+          <VCardItem>
+            <div>
+              <div class="text-overline mb-1">Użytkowniku</div>
+              <div class="text-h6 mb-1">Kształty 2D</div>
+              <div class="text-caption">
+                Twórz kształty w przestrzeni 2D
+              </div>
+            </div>
+          </VCardItem>
+          <VCardActions>
+            <VBtn variant="outlined" color="on-surface" to="/2d-shapes">Tworzenie brył 2D</VBtn>
           </VCardActions>
         </VCard>
       </VRow>

@@ -27,11 +27,11 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Camera } from "@mediapipe/camera_utils";
 import { Hands } from "@mediapipe/hands";
 import { ConvexGeometry } from "three-stdlib";
-
 import {
   arePointsTouching,
   mergeClosePoints,
 } from "@/utils/utils";
+
 export default {
   name: "HandRecognition",
   data() {

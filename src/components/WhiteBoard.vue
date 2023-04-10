@@ -1,14 +1,21 @@
 <template>
     <VCol>
         <VRow class="mx-2 mt-4">
-            <VCard color="primary" class="pa-1">
-                <div class="content-container">
-                    <video class="input_video" ref="videoElement" playsinline></video>
-                </div>
-            </VCard>
-            <VCard color="white" class="pa-1 ms-1">
-                <canvas ref="drawingCanvas" />
-            </VCard>
+            <VCol>
+                <VCard color="secondary" class="pa-8">
+                    <div class="content-container">
+                        <video class="input_video" ref="videoElement" playsinline></video>
+                    </div>
+                </VCard>
+            </VCol>
+            <VCol>
+                <VCard color="white" class="pa-1 ms-1">
+                    <canvas ref="drawingCanvas" />
+
+                </VCard>
+                <ColorPalette :colors="['black', 'red', 'green', 'blue', 'yellow', 'purple']"
+                    @color-selected="changeColor" />
+            </VCol>
         </VRow>
 
         <VContainer fluid class="d-flex justify-center align-center">
@@ -38,16 +45,43 @@ import { arePointsTouching } from '@/utils/utils';
 import { Camera } from "@mediapipe/camera_utils";
 import { Hands } from "@mediapipe/hands";
 import * as Tesseract from "tesseract.js";
-
+import ColorPalette from "./ColorPalette.vue";
 
 export default {
     name: "WhiteBoard",
+    components: {
+        ColorPalette,
+    },
     data() {
         return {
             currentIcon: "mdi-thumb-down",
             currentColor: "red",
             recognizedText: "",
         };
+    },
+    methods: {
+        clearCanvas() {
+            const drawingCanvas = this.$refs.drawingCanvas;
+            const ctx = drawingCanvas.getContext("2d");
+            ctx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+        },
+        async recognizeText() {
+            const drawingCanvas = this.$refs.drawingCanvas;
+            try {
+                const result = await Tesseract.recognize(drawingCanvas, "pol", {
+                });
+
+                this.recognizedText = result.data.text;
+
+            } catch (error) {
+                console.error("Error recognizing text: ", error);
+            }
+        },
+        changeColor(color) {
+            const drawingCanvas = this.$refs.drawingCanvas;
+            const ctx = drawingCanvas.getContext("2d");
+            ctx.strokeStyle = color;
+        },
     },
     mounted() {
         const width = 700;
@@ -120,25 +154,6 @@ export default {
         });
         camera.start();
     },
-    methods: {
-        clearCanvas() {
-            const drawingCanvas = this.$refs.drawingCanvas;
-            const ctx = drawingCanvas.getContext("2d");
-            ctx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-        },
-        async recognizeText() {
-            const drawingCanvas = this.$refs.drawingCanvas;
-            try {
-                const result = await Tesseract.recognize(drawingCanvas, "pol", {
-                });
-
-                this.recognizedText = result.data.text;
-
-            } catch (error) {
-                console.error("Error recognizing text: ", error);
-            }
-        },
-    }
 };
 </script>
 

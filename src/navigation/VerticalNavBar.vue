@@ -25,7 +25,7 @@ export default {
       mini: false,
       menuItems: [
         { title: "Start", icon: "mdi-home", link: "/" },
-        { title: "Bryły 3D", icon: "mdi-hand-back-left", link: "/hand" },
+        { title: "Bryły 3D", icon: "mdi-cube-outline", link: "/hand" },
         {
           title: "Whiteboard",
           icon: "mdi-human-male-board",
