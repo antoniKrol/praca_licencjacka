@@ -20,6 +20,15 @@
     <VContainer fluid>
         <VRow class="d-flex justify-center align-center">
             <VBtn @click="clearCanvas">Wyczyść tablicę</VBtn>
+            <VBtn @click="recognizeText" class="ms-1">Rozpoznaj tekst</VBtn>
+        </VRow>
+    </VContainer>
+    <VContainer fluid>
+        <VRow class="d-flex justify-center align-center">
+            <VCol>
+                <h4>Rozpoznany text:</h4>
+                <p>{{ recognizedText }}</p>
+            </VCol>
         </VRow>
     </VContainer>
 </template>
@@ -28,6 +37,8 @@
 import { arePointsTouching } from '@/utils/utils';
 import { Camera } from "@mediapipe/camera_utils";
 import { Hands } from "@mediapipe/hands";
+import * as Tesseract from "tesseract.js";
+
 
 export default {
     name: "WhiteBoard",
@@ -35,6 +46,7 @@ export default {
         return {
             currentIcon: "mdi-thumb-down",
             currentColor: "red",
+            recognizedText: "",
         };
     },
     mounted() {
@@ -113,6 +125,18 @@ export default {
             const drawingCanvas = this.$refs.drawingCanvas;
             const ctx = drawingCanvas.getContext("2d");
             ctx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+        },
+        async recognizeText() {
+            const drawingCanvas = this.$refs.drawingCanvas;
+            try {
+                const result = await Tesseract.recognize(drawingCanvas, "pol", {
+                });
+
+                this.recognizedText = result.data.text;
+
+            } catch (error) {
+                console.error("Error recognizing text: ", error);
+            }
         },
     }
 };

@@ -12,6 +12,7 @@
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/hands": "^0.4.1675469240",
     "core-js": "^3.8.3",
+    "tesseract.js": "^4.0.3",
     "three": "^0.151.3",
     "three-stdlib": "^2.21.8",
     "vue": "^3.2.13",
