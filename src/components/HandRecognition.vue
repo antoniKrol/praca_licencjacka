@@ -26,7 +26,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Camera } from "@mediapipe/camera_utils";
 import { Hands } from "@mediapipe/hands";
-import { ConvexHull } from "three-stdlib";
+import { ConvexGeometry } from "three-stdlib";
+
 import {
   arePointsTouching,
   mergeClosePoints,
@@ -43,8 +44,17 @@ export default {
     const width = 700;
     const height = 400;
     let isCameraLooking = false;
+    const clearCanvas = () => {
+      if (scene && mesh) {
+        scene.remove(mesh);
+        mesh.geometry.dispose();
+        mesh.material.dispose();
+        mesh = null;
+      }
+    };
     const addShape = (camera) => {
-      const scale = 100; // Increase the scale if needed
+      clearCanvas();
+      const scale = 150;
       const points = pointsArray.map(
         (point) =>
           new THREE.Vector3(
@@ -53,27 +63,11 @@ export default {
             Math.abs(point.z * scale * 10)
           )
       );
-      const convexHull = new ConvexHull().setFromPoints(points);
 
-      // Create geometry from the convex hull
-      const geometry = new THREE.BufferGeometry();
-      const vertices = [];
-      const faces = convexHull.faces;
+      const geometry = new ConvexGeometry(points);
 
-      faces.forEach((face) => {
-        const a = face.edge.next.vertex.point;
-        const b = face.edge.prev.vertex.point;
-        const c = face.edge.vertex.point;
-        vertices.push(a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z);
-      });
-
-      geometry.setAttribute(
-        "position",
-        new THREE.BufferAttribute(new Float32Array(vertices), 3)
-      );
-
-      const material = new THREE.MeshBasicMaterial({
-        color: 0x00ffee,
+      const material = new THREE.MeshPhongMaterial({
+        color: 0x2E3D59,
         side: THREE.DoubleSide,
       });
 
@@ -86,11 +80,13 @@ export default {
 
         // Update camera position and target
         camera.position.set(center.x, center.y, center.z + 100);
+
         camera.lookAt(center);
         isCameraLooking = true;
       }
       scene.add(mesh);
     };
+
 
     let shapeAdded = false;
     // Pobierz element <video> o klasie "input_video"
@@ -179,19 +175,39 @@ export default {
     canvas.height = height;
     // Utwórz scenę
     scene = new THREE.Scene();
+    const planeGeometry = new THREE.PlaneGeometry(1000, 1000);
+    const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xAAAAAA, side: THREE.DoubleSide });
+
+    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    plane.position.y = -100; // You can adjust this value to position the ground accordingly
+    plane.rotation.x = Math.PI / 2;
+
+    scene.add(plane);
+
+    // Create ambient light
+    const ambientLight = new THREE.AmbientLight(0x404040, 2);
+    scene.add(ambientLight);
+
+    // Create spot light
+    const spotLight = new THREE.SpotLight(0xffffff, 0.5, 0, Math.PI / 3);
+    spotLight.position.set(1, 600, 40)
+    scene.add(spotLight);
+
+
 
     // Utwórz kamerę
     cameraT = new THREE.PerspectiveCamera(
-      775,
+      75,
       canvas.width / canvas.height,
-      0.1,
-      1000
+      1,
+      2000
     );
     cameraT.position.z = 5;
 
     // Utwórz renderer
     renderer = new THREE.WebGLRenderer({ canvas: canvas });
     renderer.setSize(canvas.width, canvas.height);
+    renderer.setClearColor(0xB8B8BF);
     this.$refs.rendererContainer.appendChild(renderer.domElement);
 
     // Utwórz kontrolery orbity
