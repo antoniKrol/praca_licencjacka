@@ -27,10 +27,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Camera } from "@mediapipe/camera_utils";
 import { Hands } from "@mediapipe/hands";
 import { ConvexGeometry } from "three-stdlib";
-import {
-  arePointsTouching,
-  mergeClosePoints,
-} from "@/utils/utils";
+import { arePointsTouching, mergeClosePoints } from "@/utils/utils";
 
 export default {
   name: "HandRecognition",
@@ -41,7 +38,7 @@ export default {
     };
   },
   mounted() {
-    const width = 700;
+    const width = 650;
     const height = 400;
     let isCameraLooking = false;
     const clearCanvas = () => {
@@ -67,7 +64,7 @@ export default {
       const geometry = new ConvexGeometry(points);
 
       const material = new THREE.MeshPhongMaterial({
-        color: 0x2E3D59,
+        color: 0x2e3d59,
         side: THREE.DoubleSide,
       });
 
@@ -87,7 +84,6 @@ export default {
       scene.add(mesh);
     };
 
-
     let shapeAdded = false;
     // Pobierz element <video> o klasie "input_video"
     const videoElement = this.$refs.videoElement;
@@ -98,8 +94,6 @@ export default {
     // Zmienna do przechowywania aktualnego indeksu w tablicy temp
     //let i = -1;
     let isPointAdded = false;
-
-
 
     //Funkcja wywoływana przy każdym nowym wyniku rozpoznawania dłoni
     //d = ((x2 - x1)2 + (y2 - y1)2 + (z2 - z1)2)1/2
@@ -176,7 +170,10 @@ export default {
     // Utwórz scenę
     scene = new THREE.Scene();
     const planeGeometry = new THREE.PlaneGeometry(1000, 1000);
-    const planeMaterial = new THREE.MeshPhongMaterial({ color: 0xAAAAAA, side: THREE.DoubleSide });
+    const planeMaterial = new THREE.MeshPhongMaterial({
+      color: 0xaaaaaa,
+      side: THREE.DoubleSide,
+    });
 
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.position.y = -100; // You can adjust this value to position the ground accordingly
@@ -190,10 +187,8 @@ export default {
 
     // Create spot light
     const spotLight = new THREE.SpotLight(0xffffff, 0.5, 0, Math.PI / 3);
-    spotLight.position.set(1, 600, 40)
+    spotLight.position.set(1, 600, 40);
     scene.add(spotLight);
-
-
 
     // Utwórz kamerę
     cameraT = new THREE.PerspectiveCamera(
@@ -207,7 +202,7 @@ export default {
     // Utwórz renderer
     renderer = new THREE.WebGLRenderer({ canvas: canvas });
     renderer.setSize(canvas.width, canvas.height);
-    renderer.setClearColor(0xB8B8BF);
+    renderer.setClearColor(0xb8b8bf);
     this.$refs.rendererContainer.appendChild(renderer.domElement);
 
     // Utwórz kontrolery orbity

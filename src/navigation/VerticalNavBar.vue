@@ -1,10 +1,22 @@
 <template>
-  <VNavigationDrawer app :mini-variant="mini" :width="drawerWidth" :value="drawer" permanent>
-    <VBtn variant="text" color="primary" @click="toggleDrawer" :icon="toggleIcon" />
+  <VNavigationDrawer
+    app
+    :mini-variant="mini"
+    :width="drawerWidth"
+    :value="drawer"
+    permanent>
+    <VBtn
+      variant="text"
+      color="primary"
+      @click="toggleDrawer"
+      :icon="toggleIcon" />
 
     <VDivider></VDivider>
     <VList dense>
-      <VListItem v-for="(item, index) in menuItems" :key="index" :to="item.link">
+      <VListItem
+        v-for="(item, index) in menuItems"
+        :key="index"
+        :to="item.link">
         <VListItemIcon>
           <VIcon>{{ item.icon }}</VIcon>
         </VListItemIcon>
@@ -27,7 +39,7 @@ export default {
         { title: "Start", icon: "mdi-home", link: "/" },
         { title: "Bryły 3D", icon: "mdi-cube-outline", link: "/hand" },
         {
-          title: "Whiteboard",
+          title: "Tablica",
           icon: "mdi-human-male-board",
           link: "/white-board",
         },
