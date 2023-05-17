@@ -139,7 +139,7 @@ export default {
         if (arePointsTouching(p1, p2)) {
           this.currentIcon = "mdi-thumb-up";
           this.currentColor = "green";
-
+          //
           if (!drawing) {
             ctx.beginPath();
             ctx.moveTo(x, y);
