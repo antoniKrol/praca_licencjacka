@@ -56,7 +56,7 @@ export default {
       return this.mini ? "mdi-chevron-right" : "mdi-chevron-left";
     },
     drawerWidth() {
-      return this.mini ? 56 : 240;
+      return this.mini ? 120 : 56;
     },
   },
   methods: {
