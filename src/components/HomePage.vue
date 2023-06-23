@@ -47,7 +47,7 @@
           </VCardItem>
           <VCardActions class="justify-center">
             <VBtn variant="outlined" color="on-surface" to="/2d-shapes"
-              >Tworzenie brył 2D</VBtn
+              >Tworzenie kształtów 2D</VBtn
             >
           </VCardActions>
         </VCard>
