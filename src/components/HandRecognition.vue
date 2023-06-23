@@ -16,7 +16,7 @@
       <VIcon class="mt-5" size="36" :icon="currentIcon" :color="currentColor" />
       <br />
       <p id="coord" ref="coordElement"></p>
-      <VBtn color="success" class="ml-10" @click="clearCanvasButton">Wyczyść scene</VBtn>
+      <VBtn color="primary" class="ml-10" @click="clearCanvasButton">Wyczyść scene</VBtn>
     </VContainer>
   </VCol>
 </template>
