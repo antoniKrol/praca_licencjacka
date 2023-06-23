@@ -16,6 +16,7 @@
       <VIcon class="mt-5" size="36" :icon="currentIcon" :color="currentColor" />
       <br />
       <p id="coord" ref="coordElement"></p>
+      <VBtn color="success" class="ml-10" @click="clearCanvasButton">Wyczyść scene</VBtn>
     </VContainer>
   </VCol>
 </template>
@@ -35,24 +36,38 @@ export default {
     return {
       currentIcon: "mdi-thumb-down",
       currentColor: "red",
+      pointsArray: [],
     };
+  },
+  methods: {
+    clearCanvas: function () {
+      if (this.scene && this.mesh) {
+        this.scene.remove(this.mesh);
+        this.mesh.geometry.dispose();
+        this.mesh.material.dispose();
+        this.mesh = null;
+        this.$refs.coordElement.innerHTML = 0;
+      }
+    },
+    clearCanvasButton: function () {
+      if (this.scene && this.mesh) {
+        this.scene.remove(this.mesh);
+        this.mesh.geometry.dispose();
+        this.mesh.material.dispose();
+        this.mesh = null;
+        this.$refs.coordElement.innerHTML = 0;
+        this.pointsArray = [];
+      }
+    },
   },
   mounted() {
     const width = 650;
     const height = 400;
     let isCameraLooking = false;
-    const clearCanvas = () => {
-      if (scene && mesh) {
-        scene.remove(mesh);
-        mesh.geometry.dispose();
-        mesh.material.dispose();
-        mesh = null;
-      }
-    };
     const addShape = (camera) => {
-      clearCanvas();
+      this.clearCanvas();
       const scale = 150;
-      const points = pointsArray.map(
+      const points = this.pointsArray.map(
         (point) =>
           new THREE.Vector3(
             point.x * scale,
@@ -68,28 +83,26 @@ export default {
         side: THREE.DoubleSide,
       });
 
-      mesh = new THREE.Mesh(geometry, material);
+      this.mesh = new THREE.Mesh(geometry, material);
       if (!isCameraLooking) {
         // Calculate the center of the input points
         const center = new THREE.Vector3(0, 0, 0);
-        pointsArray.forEach((point) => center.add(point));
-        center.divideScalar(pointsArray.length);
+        this.pointsArray.forEach((point) => center.add(point));
+        center.divideScalar(this.pointsArray.length);
 
         // Update camera position and target
-        camera.position.set(center.x, center.y, center.z + 100);
+        camera.position.set(center.x, center.y, center.z - 100);
 
         camera.lookAt(center);
         isCameraLooking = true;
       }
-      scene.add(mesh);
+      this.scene.add(this.mesh);
     };
 
     let shapeAdded = false;
     // Pobierz element <video> o klasie "input_video"
     const videoElement = this.$refs.videoElement;
 
-    // Tablica do przechowywania punktów
-    let pointsArray = [];
 
     // Zmienna do przechowywania aktualnego indeksu w tablicy temp
     //let i = -1;
@@ -111,19 +124,19 @@ export default {
           results.multiHandLandmarks[0][4].y,
           results.multiHandLandmarks[0][4].z
         );
-        if (pointsArray.length >= 3 && !shapeAdded) {
+        if (this.pointsArray.length >= 3 && !shapeAdded) {
           addShape(cameraT);
           //shapeAdded=true;
         }
         if (!isPointAdded && arePointsTouching(p1, p2)) {
-          pointsArray = mergeClosePoints(pointsArray, p1, 0.02);
+          this.pointsArray = mergeClosePoints(this.pointsArray, p1, 0.02);
           isPointAdded = true;
         } else if (!arePointsTouching(p1, p2)) {
-          this.$refs.coordElement.innerHTML = pointsArray.length;
+          this.$refs.coordElement.innerHTML = this.pointsArray.length;
           this.currentIcon = "mdi-thumb-up";
           this.currentColor = "green";
           isPointAdded = false;
-          if (pointsArray.length >= 3) {
+          if (this.pointsArray.length >= 3) {
             //draw(pointsArray);
           }
         } else {
@@ -150,7 +163,7 @@ export default {
       minTrackingConfidence: 0.7,
     });
 
-    hands.onResults(onResults);
+    hands.onResults(onResults.bind(this));
 
     const camera = new Camera(videoElement, {
       onFrame: async () => {
@@ -162,13 +175,13 @@ export default {
     camera.start();
 
     // Załaduj bibliotekę Three.js
-    var scene, cameraT, renderer, mesh;
+    var cameraT, renderer;
     var controls;
     const canvas = this.$refs.canvas;
     canvas.width = width;
     canvas.height = height;
     // Utwórz scenę
-    scene = new THREE.Scene();
+    this.scene = new THREE.Scene();
     const planeGeometry = new THREE.PlaneGeometry(1000, 1000);
     const planeMaterial = new THREE.MeshPhongMaterial({
       color: 0xaaaaaa,
@@ -179,16 +192,16 @@ export default {
     plane.position.y = -100; // You can adjust this value to position the ground accordingly
     plane.rotation.x = Math.PI / 2;
 
-    scene.add(plane);
+    this.scene.add(plane);
 
     // Create ambient light
     const ambientLight = new THREE.AmbientLight(0x404040, 2);
-    scene.add(ambientLight);
+    this.scene.add(ambientLight);
 
     // Create spot light
     const spotLight = new THREE.SpotLight(0xffffff, 0.5, 0, Math.PI / 3);
     spotLight.position.set(1, 600, 40);
-    scene.add(spotLight);
+    this.scene.add(spotLight);
 
     // Utwórz kamerę
     cameraT = new THREE.PerspectiveCamera(
@@ -210,11 +223,10 @@ export default {
 
     // Funkcja aktualizująca
     var render = function () {
-      requestAnimationFrame(render);
-
-      controls.update();
-      renderer.render(scene, cameraT);
-    };
+  requestAnimationFrame(render);
+  controls.update();
+  renderer.render(this.scene, cameraT);
+}.bind(this);
 
     // Rozpocznij renderowanie
     render();
