@@ -3,19 +3,17 @@
     <VContainer class="text-center">
       <h1>Wybierz:</h1>
       <VSpacer></VSpacer>
-
       <VRow class="mt-4">
         <VCard class="mx-auto" max-width="344" variant="outlined">
           <VCardItem>
             <div>
-              <div class="text-overline mb-1">Użytkowniku</div>
               <div class="text-h6 mb-1">Tworzenie brył 3D</div>
               <div class="text-caption">
                 Twórz bryły przy użyciu kamery oraz dłoni
               </div>
             </div>
           </VCardItem>
-          <VCardActions>
+          <VCardActions class="justify-center">
             <VBtn variant="outlined" color="on-surface" to="/hand"
               >Tworzenie brył 3D</VBtn
             >
@@ -24,14 +22,13 @@
         <VCard class="mx-auto" max-width="344" variant="outlined">
           <VCardItem>
             <div>
-              <div class="text-overline mb-1">Użytkowniku</div>
               <div class="text-h6 mb-1">Pisanie po szkle</div>
               <div class="text-caption">
                 Pisz w powietrzu tak jak na tablicy
               </div>
             </div>
           </VCardItem>
-          <VCardActions>
+          <VCardActions class="justify-center">
             <VBtn
               variant="outlined"
               color="on-surface"
@@ -44,12 +41,11 @@
         <VCard class="mx-auto" max-width="344" variant="outlined">
           <VCardItem>
             <div>
-              <div class="text-overline mb-1">Użytkowniku</div>
               <div class="text-h6 mb-1">Kształty 2D</div>
               <div class="text-caption">Twórz kształty w przestrzeni 2D</div>
             </div>
           </VCardItem>
-          <VCardActions>
+          <VCardActions class="justify-center">
             <VBtn variant="outlined" color="on-surface" to="/2d-shapes"
               >Tworzenie brył 2D</VBtn
             >
